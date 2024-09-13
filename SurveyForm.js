@@ -79,7 +79,7 @@ function SurveyForm() {
             <option value="5">5 - Excellent</option>
           </select>
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <button type="submit" className="btn5 btn-primary">Submit</button>
       </form>
       {message && <div className="mt-3 alert alert-success">{message}</div>}
     </div>

@@ -21,7 +21,7 @@ function Login({ onLogin }) {
   };
 
   return (
-    <div className="container mt-5">
+    <div style={{ backgroundColor:'#ddd',color:'darkred', width: '350px', margin: '0 auto' }} className="container col-md-4 mt-5 text-center">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -44,7 +44,7 @@ function Login({ onLogin }) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-primary">Login</button>
+        <button type="submit" className="btn5 btn-primary">Login</button>
       </form>
       {message && <div className="mt-3 alert alert-danger">{message}</div>} {}
     </div>

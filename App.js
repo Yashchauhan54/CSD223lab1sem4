@@ -8,6 +8,7 @@ import BankTransactions from './BankTransactions';
 import SurveyForm from './SurveyForm';
 import myphoto from './myimg.jpg';
 import mybank from './bank.jpg';
+import ETransfer from './ETransfer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import myimg1 from './m1.jpg';
@@ -22,11 +23,12 @@ function App() {
   const [transactions, setTransactions] = useState([]);
   const [accounts, setAccounts] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [message, setMessage] = useState(''); 
 
-  const handleTransaction = (type, accountNumber, amount) => {
+  const handleTransaction = (type, accountNumber, amount, targetAccount = null) => {
     const transactionAmount = parseFloat(amount);
     if (isNaN(transactionAmount) || transactionAmount <= 0) {
-      alert('Please enter a valid amount');
+      setMessage('Please enter a valid amount');
       return;
     }
 
@@ -40,7 +42,7 @@ function App() {
       newAccounts[accountNumber] += transactionAmount;
     } else if (type === 'Withdraw') {
       if (newAccounts[accountNumber] < transactionAmount) {
-        alert('Insufficient funds');
+        setMessage('Insufficient funds');
         return;
       }
       newAccounts[accountNumber] -= transactionAmount;
@@ -57,6 +59,12 @@ function App() {
         balance: newAccounts[accountNumber],
       },
     ]);
+
+    if (type === 'Withdraw' && targetAccount) {
+      handleTransaction('Deposit', targetAccount, transactionAmount);
+    }
+
+    setMessage(`Transaction successful: ${type} of ${transactionAmount} from account ${accountNumber}`);
   };
 
   const handleLogin = () => {
@@ -84,9 +92,16 @@ function App() {
                 <li className="nav-item">
                   <Link className="nav-link" to="/about">About</Link>
                 </li>
+                {isLoggedIn && (
                 <li className="nav-item">
                   <Link className="nav-link" to="/transactions">Bank Transactions</Link>
                 </li>
+                )}
+                {isLoggedIn && (
+                 <li className="nav-item">
+                  <Link className="nav-link" to="/etransfer">e-Transfer</Link>
+                   </li>
+)}
                 <li className="nav-item">
                   <Link className="nav-link" to="#">More Services</Link>
                 </li>
@@ -257,13 +272,9 @@ function App() {
     </div>
    
                 </div>
-                <div className="container mt-5 ">
+                <div className="container mt-5 col-md-5">
           <SurveyForm />
         </div>
-        <div className='thank'>
- 
- <h1>Thank you for visiting my website.</h1>
-</div>
               </div>
               
 
@@ -277,6 +288,9 @@ function App() {
             <Route path="/transactions" element={
               isLoggedIn ? <BankTransactions transactions={transactions} onTransaction={handleTransaction} /> : <Navigate to="/login" />
             } />
+            <Route path="/etransfer" element={
+  isLoggedIn ? <ETransfer accounts={accounts} onTransaction={handleTransaction} /> : <Navigate to="/login" />
+} />
           </Routes>
 
         </div>

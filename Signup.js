@@ -31,7 +31,7 @@ function Signup() {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{ backgroundColor:'#ddd',color:'darkred', width: '350px', margin: '0 auto' }}>
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -64,7 +64,7 @@ function Signup() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn btn-primary">Signup</button>
+        <button type="submit" className="btn5 btn-primary">Signup</button>
       </form>
       {message && <div className="mt-3 alert alert-info">{message}</div>} {}
     </div>

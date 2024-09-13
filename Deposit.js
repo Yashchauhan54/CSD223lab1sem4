@@ -17,7 +17,7 @@ function Deposit({ onTransaction }) {
   };
 
   return (
-    <div className="card p-3 mb-3" style={{ width: '800px', margin: '0 auto' }}>
+    <div className="card p-3 mb-3" style={{ width: '950px', margin: '0 auto' }}>
       <h3 className="card-title text-center">Deposit</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -38,8 +38,9 @@ function Deposit({ onTransaction }) {
             onChange={(e) => setAmount(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn4 btn-primary me-2">Deposit money</button>
-        <button type="button" className="btn btn-secondary" onClick={handleCancel}>Cancel</button>
+        <div className='btn text-center'></div>
+        <button type="submit" className="btn5 btn-primary me-2">Deposit</button>
+        <button type="button" className="btn7 btn-secondary" onClick={handleCancel}>Cancel</button>
       </form>
     </div>
   );

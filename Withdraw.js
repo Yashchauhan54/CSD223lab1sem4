@@ -17,7 +17,7 @@ function Withdraw({ onTransaction }) {
   };
 
   return (
-    <div className="card p-4 mb-3" style={{ width: '800px', margin: '0 auto' }}>
+    <div className="card p-4 mb-3" style={{ width: '950px', margin: '0 auto' }}>
       <h3 className="card-title1 text-center">Withdraw</h3>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -38,8 +38,8 @@ function Withdraw({ onTransaction }) {
             onChange={(e) => setAmount(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn4 btn-primary me-2">Withdraw money</button>
-        <button type="button" className="btn btn-secondary" onClick={handleCancel}>Cancel</button>
+        <button type="submit" className="btn4 btn-primary me-2">Withdraw</button>
+        <button type="button" className="btn7 btn-secondary" onClick={handleCancel}>Cancel</button>
       </form>
     </div>
   );

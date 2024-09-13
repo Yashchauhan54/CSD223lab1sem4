@@ -13,7 +13,35 @@
   padding: 5px 5px;
   border-radius: 5px;
   margin-top: 5px;
+  width: 200px;
 }
+.btn4:hover{
+  background-color: rgb(245, 3, 3);
+}
+.btn5:hover{
+  background-color: rgb(245, 3, 3);
+}
+.btn5{
+  color: white;
+  background-color:rgb(155, 2, 7);
+  padding: 5px 5px;
+  border-radius: 5px;
+  margin-top: 5px;
+  width: 200px;
+}
+
+.btn7{
+  padding: 5px 5px;
+  border-radius: 5px;
+  margin-top: 5px;
+  width: 200px;
+}
+
+.btn7:hover{
+  background-color: rgb(240, 7, 42);
+  color: white;
+}
+
 
 
 @media (prefers-reduced-motion: no-preference) {
@@ -25,6 +53,7 @@
   font-size: 50px;
   color: darkred;
   text-align: center;
+  margin-top: 40px;
 }
 
 .App-header {
@@ -124,8 +153,8 @@
 }
 .btn3{
   
-  background-color: darkred;
-  color: white;
+  font-size: 20px;
+  color: rgb(202, 10, 10);
 }
 .col-md-4 {
  
@@ -165,6 +194,11 @@
   margin-left:30px ;
   margin-right: 30px;
 }
+.footer{
+  background-color: #060707;
+  color:white;
+  border-radius: 2%;
+}
 .card-title1{
   color: darkred;
   background-color: #ddd;
@@ -172,6 +206,19 @@
 .btn-outline-light{
   background-color: darkred;
   color: white;
+}
+.col.md-7 h2{
+  color: darkred;
+  background-color: #ddd;
+}
+.btn-outline-light:hover{
+  background-color: rgb(246, 8, 24);
+  color: white;
+  
+}
+.col-md-8 p{
+  font-size: 20px;
+  margin-top: 15px;
 }
 
 .mybtn{
@@ -202,4 +249,17 @@
   width: 100%; 
   text-align: center; 
   font-size: 14px; 
+}
+
+.col-md-4 h4{
+  color: rgb(142, 18, 18);
+}
+
+.navbar{
+  background-color: rgb(222, 214, 214);
+}
+
+.navbar .nav-link{
+color: darkred;
+font-size: 15px;
 }

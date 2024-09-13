@@ -8,9 +8,9 @@ function BankTransactions({ transactions, onTransaction }) {
 
   return (
     <div>
-      <h1 className="text-center mb-4">Bank Transactions</h1>
+      <h1 className="text-center mb-4" style={{ color: 'darkred', fontSize: '50px' }}>Bank Transactions</h1>
       <div className="d-flex justify-content-around mb-4">
-        <button className="btn4 btn-success " style={{ width: '400px', margin: '0 auto' }} onClick={() => setShowForm('Deposit')}>Deposit</button>
+        <button className="btn5 btn-success " style={{ width: '400px', margin: '0 auto' }} onClick={() => setShowForm('Deposit')}>Deposit</button>
         <button className="btn4 btn-danger" style={{ width: '400px', margin: '0 auto' }}onClick={() => setShowForm('Withdraw')}>Withdraw</button>
       </div>
       {showForm === 'Deposit' && <Deposit onTransaction={onTransaction} />}
