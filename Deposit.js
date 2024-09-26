@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 
 function Deposit({ onTransaction }) {
-  const [accountNumber, setAccountNumber] = useState('');
   const [amount, setAmount] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onTransaction('Deposit', accountNumber, amount);
-    setAccountNumber('');
+    onTransaction('Deposit', amount); // This should be correctly passing the amount
     setAmount('');
-  };
+};
 
   const handleCancel = () => {
-    setAccountNumber('');
     setAmount('');
   };
 
@@ -20,15 +17,6 @@ function Deposit({ onTransaction }) {
     <div className="card p-3 mb-3" style={{ width: '950px', margin: '0 auto' }}>
       <h3 className="card-title text-center">Deposit</h3>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Account Number</label>
-          <input
-            type="text"
-            className="form-control"
-            value={accountNumber}
-            onChange={(e) => setAccountNumber(e.target.value)}
-          />
-        </div>
         <div className="mb-3">
           <label className="form-label">Amount</label>
           <input

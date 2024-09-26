@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 
 function Withdraw({ onTransaction }) {
-  const [accountNumber, setAccountNumber] = useState('');
   const [amount, setAmount] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onTransaction('Withdraw', accountNumber, amount);
-    setAccountNumber('');
+    onTransaction('Withdraw', amount); // This should also be correctly passing the amount
     setAmount('');
-  };
+};
+
 
   const handleCancel = () => {
-    setAccountNumber('');
     setAmount('');
   };
 
@@ -20,15 +18,6 @@ function Withdraw({ onTransaction }) {
     <div className="card p-4 mb-3" style={{ width: '950px', margin: '0 auto' }}>
       <h3 className="card-title1 text-center">Withdraw</h3>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Account Number</label>
-          <input
-            type="text"
-            className="form-control"
-            value={accountNumber}
-            onChange={(e) => setAccountNumber(e.target.value)}
-          />
-        </div>
         <div className="mb-3">
           <label className="form-label">Amount</label>
           <input

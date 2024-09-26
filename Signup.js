@@ -1,72 +1,118 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Signup() {
-  const [id, setId] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState(''); // New state for the message
-  const navigate = useNavigate();
+  const [message, setMessage] = useState('');
+  const [storedData, setStoredData] = useState([]); // Ensure it's an array
 
-  const handleSubmit = (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
-      return;
-    }
 
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    if (users.find(user => user.id === id)) {
-      setMessage('ID already exists');
-      return;
-    }
+    const userData = {
+      username,
+      email,
+      password,
+    };
 
-   
-    users.push({ id, password });
-    localStorage.setItem('users', JSON.stringify(users));
-    setMessage('Signup successful, please login.');
-    setTimeout(() => {
-      navigate('/login');
-    }, 2000); 
+    const newData = [...storedData, userData]; // Push new user data to existing data
+    const data = JSON.stringify(newData);
+
+    const config = {
+      method: 'PUT',
+      url: 'https://api.jsonbin.io/v3/b/66edd349acd3cb34a8883822',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': '$2a$10$qAPEIbalyriaFMpiZz7XDeh9e.1rt6g3VQtlC8CZlRRhza.IQT4cO',
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then((response) => {
+        console.log(response.data);
+        setMessage('Signup successful! User data stored.');
+        fetchStoredData();
+        clearForm();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        setMessage('Signup failed.');
+      });
   };
 
+  const fetchStoredData = () => {
+    const config = {
+      method: 'GET',
+      url: 'https://api.jsonbin.io/v3/b/66edd349acd3cb34a8883822/latest',
+      headers: {
+        'X-Master-Key': '$2a$10$qAPEIbalyriaFMpiZz7XDeh9e.1rt6g3VQtlC8CZlRRhza.IQT4cO',
+      },
+    };
+
+    axios(config)
+      .then((response) => {
+        // Ensure the fetched record is an array
+        setStoredData(Array.isArray(response.data.record) ? response.data.record : []);
+        console.log('Stored data:', response.data.record);
+      })
+      .catch((error) => {
+        console.error('Error fetching stored data:', error);
+      });
+  };
+
+  const clearForm = () => {
+    setUsername('');
+    setEmail('');
+    setPassword('');
+  };
+
+  useEffect(() => {
+    fetchStoredData();
+  }, []);
+
   return (
-    <div className="container mt-5" style={{ backgroundColor:'#ddd',color:'darkred', width: '350px', margin: '0 auto' }}>
+    <div className="container mt-5">
       <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSignup} className="mb-4">
         <div className="mb-3">
-          <label htmlFor="signupId" className="form-label">ID</label>
+          <label className="form-label">Username:</label>
           <input
             type="text"
             className="form-control"
-            id="signupId"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="signupPassword" className="form-label">Password</label>
+          <label className="form-label">Email:</label>
+          <input
+            type="email"
+            className="form-control"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Password:</label>
           <input
             type="password"
             className="form-control"
-            id="signupPassword"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="signupConfirmPassword" className="form-label">Confirm Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="signupConfirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="btn5 btn-primary">Signup</button>
+        <button type="submit" className="btn btn-primary">Signup</button>
       </form>
-      {message && <div className="mt-3 alert alert-info">{message}</div>} {}
+      {message && <div className="alert alert-info">{message}</div>}
+
+     
     </div>
   );
 }

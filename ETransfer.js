@@ -7,6 +7,7 @@ function ETransfer({ accounts, onTransaction }) {
   const [receiverName, setReceiverName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [message, setMessage] = useState('');
+  const [eTransferTransactions, setETransferTransactions] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,9 +21,20 @@ function ETransfer({ accounts, onTransaction }) {
       return;
     }
 
+    const remainingBalance = accounts[fromAccount] - transferAmount;
+
     onTransaction('Withdraw', fromAccount, transferAmount);
     onTransaction('Deposit', toAccount, transferAmount);
-    onTransaction('e-Transfer', fromAccount, transferAmount, toAccount);
+    onTransaction('e-Transfer', fromAccount, transferAmount, toAccount, remainingBalance);
+
+    const newTransaction = {
+      fromAccount,
+      toAccount,
+      amount: transferAmount,
+      balance: remainingBalance,
+    };
+    
+    setETransferTransactions([...eTransferTransactions, newTransaction]);
 
     setMessage(`Transferred ${amount} from account ${fromAccount} to ${toAccount}`);
 
@@ -33,6 +45,7 @@ function ETransfer({ accounts, onTransaction }) {
     setReceiverName('');
     setPhoneNumber('');
   };
+
   const handleCancel = () => {
     setFromAccount('');
     setToAccount('');
@@ -42,7 +55,7 @@ function ETransfer({ accounts, onTransaction }) {
   };
 
   return (
-    <div className=" container col-md-6 mt-5 text-center" style={{ backgroundColor:'#ddd',color:'darkred', width: '450px', margin: '0 auto' }} >
+    <div className="container col-md-6 mt-5 text-center" style={{ backgroundColor: '#ddd', color: 'darkred', width: '450px', margin: '0 auto' }}>
       <h2 style={{ fontSize: '50px', marginBottom: '20px' }}>e-Transfer</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -95,11 +108,41 @@ function ETransfer({ accounts, onTransaction }) {
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </div>
-        <button  type="submit" className="btn4 btn-primary me-2">Send Money</button>
+        <button type="submit" className="btn4 btn-primary me-2">Send Money</button>
         <button type="button" className="btn7 btn-secondary" onClick={handleCancel}>Cancel</button>
-
       </form>
       {message && <div className="mt-3 alert alert-info">{message}</div>}
+      <ETransferTransactionList transactions={eTransferTransactions} />
+    </div>
+  );
+}
+
+
+
+function ETransferTransactionList({ transactions }) {
+  return (
+    <div className="mt-4">
+      <h3 className="text-center">E-Transfer History</h3>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>From Account</th>
+            <th>To Account</th>
+            <th>Amount</th>
+            <th>Remaining Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          {transactions.map((transaction, index) => (
+            <tr key={index}>
+              <td>{transaction.fromAccount}</td>
+              <td>{transaction.toAccount}</td>
+              <td>${transaction.amount.toFixed(2)}</td>
+              <td>${transaction.balance.toFixed(2)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

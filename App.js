@@ -5,6 +5,7 @@ import Login from './Login';
 import Signup from './Signup';
 import Footer from './Footer';
 import BankTransactions from './BankTransactions';
+
 import SurveyForm from './SurveyForm';
 import myphoto from './myimg.jpg';
 import mybank from './bank.jpg';
